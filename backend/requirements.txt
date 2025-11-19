@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+numpy<2
+pandas
+scikit-learn
+sentence-transformers
+faiss-cpu
+torch==2.2.0+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+spacy
+pymongo
+requests
+python-multipart
+bcrypt
+fpdf
+pymupdf

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "paper1",
+    "title": "Semantic search for scientific literature",
+    "authors": [
+      "A. Researcher"
+    ],
+    "abstract": "We propose a semantic search method that uses sentence embeddings to retrieve relevant scientific documents beyond keywords.",
+    "published": "2023-06-01"
+  },
+  {
+    "id": "paper2",
+    "title": "A survey on named entity recognition in scientific text",
+    "authors": [
+      "B. Scientist"
+    ],
+    "abstract": "Named entity recognition (NER) in scientific domains requires custom entity types and domain adaptation.",
+    "published": "2022-11-15"
+  }
+]

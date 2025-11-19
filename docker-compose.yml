@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    container_name: rn_mongo
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: rn_backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
+      - MONGO_DB=paperiq
+    ports:
+      - "8000:8000"
+    networks:
+      - rn_net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: rn_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_URL=http://backend:8000
+
+    ports:
+      - "8501:8501"
+    networks:
+      - rn_net
+
+volumes:
+  mongo_data:
+
+networks:
+  rn_net:
+    driver: bridge

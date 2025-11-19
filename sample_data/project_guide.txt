@@ -1,0 +1,114 @@
+📘 Research Navigator: Team Setup and Installation Guide
+
+This guide provides step-by-step instructions for setting up the "Research Navigator: Semantic Paper Analyzer" project environment in VS Code.
+
+1. System Requirements
+
+Before you begin, ensure your system meets these basic requirements:
+
+Python 3.8+: We recommend using the latest stable version of Python.
+
+VS Code: Installed with the official Python Extension.
+
+MongoDB: A running MongoDB instance (Local or Atlas/Cloud).
+
+2. MongoDB Installation and Connection
+
+The project uses MongoDB as its primary database (as defined in backend/database.py).
+
+A. Installing MongoDB
+
+Download: Download the MongoDB Community Server installer from the official website:
+``
+(URL for reference: https://www.mongodb.com/try/download/community)
+
+Install: Run the installer. During installation, choose the Custom setup and ensure that Install MongoDB Compass is checked.
+
+Start Service: The MongoDB service typically starts automatically. You can confirm it's running via your system's Services manager.
+
+B. Connection Settings
+
+The project configuration file, backend/database.py, is pre-set to connect to a local MongoDB instance:
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["research_navigator"]
+
+
+If the default port (27017) is used, no changes are needed. If you use MongoDB Atlas or a different port, you must update this connection string in backend/database.py.
+
+3. Python Environment Setup (VS Code)
+
+This project requires many specialized machine learning and data processing libraries.
+
+A. Create a Virtual Environment
+
+It is crucial to isolate project dependencies using a virtual environment.
+
+Open the project folder in VS Code.
+
+Open the integrated terminal (Ctrl + or Cmd +).
+
+Create the environment (named .venv):
+
+python -m venv .venv
+
+
+Activate the environment:
+
+Windows (Command Prompt): .\.venv\Scripts\activate
+
+Windows (PowerShell): .\.venv\Scripts\Activate.ps1
+
+macOS/Linux: source ./.venv/bin/activate
+
+B. Install Dependencies
+
+With the environment active, install all necessary libraries, including the heavy machine learning components (FAISS, Sentence-Transformers) and the networking components (feedparser for ArXiv, bcrypt for Auth, fitz for PDF parsing).
+
+pip install "uvicorn[standard]" fastapi pymongo passlib[bcrypt]" python-multipart requests streamlit sentence-transformers faiss-cpu feedparser "PyMuPDF==1.23.8"
+
+
+C. Download spaCy Model
+
+The NER pipeline uses spaCy, which requires a pre-trained language model.
+
+python -m spacy download en_core_web_sm
+
+
+4. Running the Application
+
+You must run the backend API and the frontend Streamlit application in separate terminals.
+
+Step 1: Run the Backend API
+
+The main.py file combines the core app and the additional router endpoints.
+
+Ensure your virtual environment is active.
+
+In the VS Code terminal, start the FastAPI server:
+
+uvicorn main:app --reload
+
+
+The output should show the server running, typically at http://127.0.0.1:8000.
+
+Step 2: Run the Frontend Application
+
+Open a second VS Code terminal (keep the first one running the API).
+
+Ensure the virtual environment is active in this new terminal.
+
+Start the Streamlit application, using Login.py as the entry point:
+
+streamlit run Login.py
+
+
+This will automatically open the web application in your browser.
+
+5. First Use (Registration and Ingestion)
+
+Register: Use the Create Account tab to register a new user. If successful, you can proceed to sign in.
+
+Login: Sign in with the new credentials.
+
+Ingestion: Navigate to the Ingest & Upload tab and run the ArXiv ingestion with a keyword like "machine learning" to populate the database and build the semantic index. This may take a moment.

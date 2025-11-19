@@ -1,0 +1,13 @@
+
+fastapi
+uvicorn
+pydantic
+python-jose
+passlib[bcrypt]
+streamlit
+requests
+spacy
+sentence-transformers
+faiss-cpu
+pandas
+gunicorn

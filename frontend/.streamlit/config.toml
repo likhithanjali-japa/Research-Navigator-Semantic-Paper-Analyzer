@@ -1,0 +1,6 @@
+
+[server]
+headless = true
+enableCORS = false
+port = 8501
+backend_url = "http://backend:8000"
