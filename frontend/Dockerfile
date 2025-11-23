@@ -1,20 +1,17 @@
-FROM python:3.10
-
+FROM python:3.10-slim
 WORKDIR /app
 
-COPY requirements.txt .
+# Install only frontend deps
+COPY frontend/requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy frontend source
+COPY frontend /app/frontend
 
-# copy frontend app files
-COPY . .
+ENV STREAMLIT_SERVER_HEADLESS=true \
+    STREAMLIT_SERVER_ADDRESS=0.0.0.0 \
+    STREAMLIT_SERVER_PORT=8501 \
+    BACKEND_URL=http://backend:8000
 
 EXPOSE 8501
-
-# Use env var STREAMLIT_SERVER_ENABLECORS to avoid CORS issues in container
-ENV STREAMLIT_SERVER_ENABLECORS=false
-ENV STREAMLIT_SERVER_HEADLESS=true
-ENV STREAMLIT_SERVER_PORT=8501
-ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
-
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "frontend/streamlit_app.py", "--server.address=0.0.0.0", "--server.port=8501"]
