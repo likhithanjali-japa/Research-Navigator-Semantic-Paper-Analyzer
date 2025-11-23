@@ -1,0 +1,26 @@
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Local environments (critical)
+venv/
+.venv/
+
+# OS/editor files
+.DS_Store
+*.swp
+
+# Git
+.git
+.gitignore
+
+# Cache / data
+.cache/
+*.zip
+*.tar
+*.tar.gz
+.env
+node_modules/
